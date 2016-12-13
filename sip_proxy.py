@@ -13,14 +13,17 @@ os.system(command_1)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    global userName
-    data = json.loads(request.data)
-    # print (data['sender'])
-    recipient = data['recipient']
-    message = data['message']
-    command_2 = """sip-message -a %s %s -m "%s" """ % (userName, recipient, message)
-    os.system(command_2)
-    return 'Message Sent!'
+    if request.method == 'POST':
+        global userName
+        data = json.loads(request.data)
+        # print (data['sender'])
+        recipient = data['recipient']
+        message = data['message']
+        command_2 = """sip-message -a %s %s -m "%s" """ % (userName, recipient, message)
+        os.system(command_2)
+        return 'Message Sent!'
+    else:
+        return 'Sip Simple'
 
 
 if __name__ == '__main__':
