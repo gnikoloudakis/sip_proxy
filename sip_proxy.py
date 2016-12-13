@@ -13,13 +13,13 @@ os.system(command_1)
 
 @app.route('/', methods=['POST'])
 def hello_world():
-    global username
+    global userName
     data = json.loads(request.data)
     # print (data['sender'])
     recipient = data['recipient']
     message = data['message']
 
-    command_2 = """sip-message -a %s %s -m "%s" """ % (username, recipient, message)
+    command_2 = """sip-message -a %s %s -m "%s" """ % (userName, recipient, message)
 
     os.system(command_2)
     return 'Hello World!'
