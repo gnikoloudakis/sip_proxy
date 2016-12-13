@@ -1,21 +1,26 @@
 from flask import Flask, request
 import os, json
+from config import *
 
 app = Flask(__name__)
+app.config.from_object(__name__)
+userAccount = USER_ACCOUNT
+userName = USERNAME
+userPassword = USER_PASSWORD
+command_1 = """sip-settings -a add %s %s""" % (userAccount, userPassword)
+os.system(command_1)
 
 
 @app.route('/', methods=['POST'])
 def hello_world():
+    global username
     data = json.loads(request.data)
     # print (data['sender'])
-    sender = data['sender']
-    username = data['username']
-    password = data['password']
     recipient = data['recipient']
     message = data['message']
-    command_1 = """sip-settings -a add %s %s"""%(sender, password)
-    command_2 = """sip-message -a %s %s -m "%s" """%(username, recipient, message)
-    os.system(command_1)
+
+    command_2 = """sip-message -a %s %s -m "%s" """ % (username, recipient, message)
+
     os.system(command_2)
     return 'Hello World!'
 
