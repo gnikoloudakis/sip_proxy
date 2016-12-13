@@ -14,7 +14,7 @@ def hello_world():
     recipient = data['recipient']
     message = data['message']
     command_1 = """sip-settings -a add %s %s"""%(sender, password)
-    command_2 = """sip-message -a %s %s -m %s"""%(username, recipient, message)
+    command_2 = """sip-message -a %s %s -m "%s" """%(username, recipient, message)
     os.system(command_1)
     os.system(command_2)
     return 'Hello World!'
